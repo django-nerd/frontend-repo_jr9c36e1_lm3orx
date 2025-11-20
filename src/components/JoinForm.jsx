@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useNavigate } from 'react-router-dom'
 
 const INITIAL = {
   first_name: '',
@@ -17,6 +18,7 @@ const INITIAL = {
 function JoinForm() {
   const [data, setData] = useState(INITIAL)
   const [status, setStatus] = useState({ state: 'idle' })
+  const navigate = useNavigate()
 
   const baseUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000'
 
@@ -41,6 +43,7 @@ function JoinForm() {
       if (!res.ok) throw new Error('Failed to submit')
       setStatus({ state: 'success' })
       setData(INITIAL)
+      navigate('/thank-you')
     } catch (err) {
       setStatus({ state: 'error', message: err.message })
     }
